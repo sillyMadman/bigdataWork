@@ -16,6 +16,7 @@ import java.io.IOException;
 public class MyInterfaceImpl implements MyInterface {
     String returnNull = "20210000000000";
     String returnXinXin = "20210123456789";
+    String returnMyName = "G20210735010280";
     public String findName(String studentId) {
         if (returnNull.equals(studentId)) {
             System.out.println("返回:null");
@@ -23,7 +24,11 @@ public class MyInterfaceImpl implements MyInterface {
         } else if (returnXinXin.equals(studentId)) {
             System.out.println("返回:心心");
             return "心心";
+        } else if (returnMyName.equals(studentId)) {
+            System.out.println("返回:傻疯子");
+            return "傻疯子";
         }
+
         return null;
     }
 

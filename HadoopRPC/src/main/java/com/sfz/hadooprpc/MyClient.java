@@ -25,8 +25,11 @@ public class MyClient {
         try {
             MyInterface proxy = RPC.getProxy(MyInterface.class, MyInterface.versionID,addr, conf);
             //执行RPC接口中的方法并获取结果
+            String result0 = proxy.findName("G20210735010280");
             String result1 = proxy.findName("20210000000000");
             String result2 = proxy.findName("20210123456789");
+
+            System.out.println("学号G20210735010280姓名为:" + result0);
             System.out.println("学号20210000000000姓名为:" + result1);
             System.out.println("学号20210123456789姓名为:" + result2);
         } catch (IOException e) {
