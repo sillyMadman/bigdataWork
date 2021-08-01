@@ -33,6 +33,7 @@ public class HBaseJavaApi {
 
         try {
             //获取连接
+            logger.info("获取连接");
             Connection connection = hBaseUtil.initHbase();
             Admin admin = connection.getAdmin();
 
@@ -40,27 +41,39 @@ public class HBaseJavaApi {
 //            hBaseUtil.createTable(admin,tableName, new String[]{"info", "score"});
 
             //查询数据
+            logger.info("获取全表数据");
             hBaseUtil.getScanner(connection,tableName);
 
 
 
             //添加数据初始化
-//            Student studentTom = new Student("Tom","20210000000001","1","75","82");
-//            Student studentJerry = new Student("Jerry","20210000000002","1","85","67");
-//            Student studentJack = new Student("Jack","20210000000003","1","80","80");
-//            Student studentRose = new Student("Rose","20210000000004","1","60","61");
-//            Student studentLihaowu = new Student("lihaowu","G20210735010280","3","85","85");
-//
-//
-//            //添加数据
+            Student studentTom = new Student("Tom","20210000000001","1","75","82");
+            Student studentJerry = new Student("Jerry","20210000000002","1","85","67");
+            Student studentJack = new Student("Jack","20210000000003","1","80","80");
+            Student studentRose = new Student("Rose","20210000000004","1","60","61");
+            Student studentLihaowu = new Student("lihaowu","G20210735010280","3","85","85");
+
+
+            //添加数据
+            logger.info("添加数据");
 //            hBaseUtil.put(connection,tableName,studentTom);
 //            hBaseUtil.put(connection,tableName,studentJerry);
 //            hBaseUtil.put(connection,tableName,studentJack);
 //            hBaseUtil.put(connection,tableName,studentRose);
 //            hBaseUtil.put(connection,tableName,studentLihaowu);
+            logger.info("按行键查询");
+            //按行键查询数据
+            hBaseUtil.get(connection,tableName,"Tom");
+            hBaseUtil.get(connection,tableName,"Jerry");
+            hBaseUtil.get(connection,tableName,"Jack");
+            hBaseUtil.get(connection,tableName,"Rose");
+            hBaseUtil.get(connection,tableName,"lihaowu");
+
+
 //
 //
 //            //删除数据
+              logger.info("按行键删除数据");
 //            hBaseUtil.delete(connection,tableName,"Tom");
 //            hBaseUtil.delete(connection,tableName,"Jerry");
 //            hBaseUtil.delete(connection,tableName,"Jack");
@@ -68,14 +81,10 @@ public class HBaseJavaApi {
 //            hBaseUtil.delete(connection,tableName,"lihaowu");
 
 
-            //按行键查询数据
-            hBaseUtil.get(connection,tableName,"Tom");
-            hBaseUtil.get(connection,tableName,"Jerry");
-            hBaseUtil.get(connection,tableName,"Jack");
-            hBaseUtil.get(connection,tableName,"Rose");
-            hBaseUtil.get(connection,tableName,"lihaowu");
+
             admin.close();
             connection.close();
+            logger.info("断开连接");
 
 
         } catch (Exception e) {

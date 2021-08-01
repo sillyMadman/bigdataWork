@@ -187,10 +187,14 @@ public class HBaseUtil {
             byte[] family = CellUtil.cloneFamily(cell);
             byte[] column = CellUtil.cloneQualifier(cell);
             byte[] value = CellUtil.cloneValue(cell);
-            logger.info(rowKey+":"+new String(family)+":"+new String(column) +"="+new String(value));
+            System.out.println(rowKey+":"+new String(family)+":"+new String(column) +"="+new String(value));
 
         }
         table.close();
+    }
+
+    public void deleteTable(Admin admin,String tableName) throws Exception{
+        admin.deleteTable(TableName.valueOf(tableName));
     }
 
 
