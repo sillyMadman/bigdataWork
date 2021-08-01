@@ -16,11 +16,12 @@ import java.io.IOException;
  */
 public class MyServer {
     public static void main(String[] args) {
-//
+
         //创建RPC Server的构建器
         RPC.Builder builder = new RPC.Builder(new Configuration());
-        //设置构建器相关的参数
+
         /**
+         * DES: 设置构建器相关的参数
          * 设置监听的IP或者主机名
          * 设置监听的端口
          * 设置RPC接口
@@ -31,14 +32,14 @@ public class MyServer {
                 .setProtocol(MyInterface.class)
                 .setInstance(new MyInterfaceImpl());
 
-        //构建 RPC Server
-        RPC.Server server = null;
-        try {
-            server = builder.build();
 
-        //启动
-        server.start();
-        System.out.println("RPC Server(服务器)启动了...");
+        try {
+            //构建 RPC Server
+            RPC.Server server = builder.build();
+
+            //启动
+            server.start();
+            System.out.println("RPC Server(服务器)启动了...");
         } catch (IOException e) {
             e.printStackTrace();
         }
