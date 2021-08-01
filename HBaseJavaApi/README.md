@@ -1,16 +1,16 @@
 思路
 =
 
-##目的
+## 目的
 
 
 通过Java API操作HBase实现建表，插入数据，删除数据，查询等功能
 表格式为
 ![HBase表格式.png](HBase表格式.png)
 
-##准备
+## 准备
 
-###依赖的包
+### 依赖的包
 
         <dependency>
             <groupId>org.apache.hbase</groupId>
@@ -18,7 +18,7 @@
             <version>2.1.0</version>
         </dependency>
 
-###使用说明
+### 使用说明
 
 Configuration:用于指定配置
 
@@ -30,7 +30,7 @@ Table:可以调用get、put、delete、scan操作表数据
 
 
 
-###类说明
+### 类说明
 
 HBaseJavaApi.java为对hbase操作的运行过程。
 
@@ -40,7 +40,7 @@ Student.java为添加数据的实例类。
 
 
 
-##运行截图
+## 运行截图
 
 ![运行截图.png](运行截图.png)
 
