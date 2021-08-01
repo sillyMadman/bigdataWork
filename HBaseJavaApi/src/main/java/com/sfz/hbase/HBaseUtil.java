@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Description: TODO
@@ -19,10 +20,15 @@ import java.util.ArrayList;
  * @date: 2021年07月29日 3:59 下午
  */
 public class HBaseUtil {
-    private Admin admin;
+
     private static Logger logger = LoggerFactory.getLogger(HBaseUtil.class);
 
-
+    /**
+     * 获取Hbase的连接
+     *
+     * @return Connection Hbase的连接
+     * @throws Exception
+     */
     public Connection initHbase() throws Exception {
         Configuration configuration = HBaseConfiguration.create();
         configuration.set("hbase.zookeeper.property.clientPort", "2181");
@@ -33,8 +39,14 @@ public class HBaseUtil {
         return connection;
     }
 
-    public void createTable(String tableName, String[] cols) throws Exception {
-        admin = initHbase().getAdmin();
+    /**
+     * @param admin  获取管理权限
+     * @param tableName 命名空间:表名。
+     * @param cols      列簇
+     * @throws Exception
+     */
+    public void createTable(Admin admin,String tableName, String[] cols) throws Exception {
+
 
         //命名空间如果无，创建命名空间
         if (tableName.contains(":")) {
@@ -64,26 +76,121 @@ public class HBaseUtil {
 
     }
 
-    public ResultScanner getScanner(String tableName) throws Exception {
-        admin = initHbase().getAdmin();
-        if (admin.tableExists(TableName.valueOf(tableName))) {
-            Table table = initHbase().getTable(TableName.valueOf(tableName));
+    /**
+     * 查询表数据
+     * @param connection
+     * @param tableName
+     * @return
+     * @throws Exception
+     */
+    public ResultScanner getScanner(Connection connection,String tableName) throws Exception {
+        if (connection.getAdmin().tableExists(TableName.valueOf(tableName))) {
+            Table table = connection.getTable(TableName.valueOf(tableName));
             Scan scan = new Scan();
             scan.setCaching(1000);
             ResultScanner results = table.getScanner(scan);
             results.forEach(result -> {
                 System.out.println("rowkey == " + Bytes.toString(result.getRow()));
-                System.out.println("basic:name == " + Bytes.toString(result.getValue(Bytes.toBytes("info"), Bytes.toBytes("student_id"))));
-                System.out.println("basic:name == " + Bytes.toString(result.getValue(Bytes.toBytes("info"), Bytes.toBytes("class"))));
-                System.out.println("basic:name == " + Bytes.toString(result.getValue(Bytes.toBytes("score"), Bytes.toBytes("understanding"))));
-                System.out.println("basic:name == " + Bytes.toString(result.getValue(Bytes.toBytes("score"), Bytes.toBytes("programming"))));
+                System.out.println("info:class == " + Bytes.toString(result.getValue(Bytes.toBytes("info"), Bytes.toBytes("student_id"))));
+                System.out.println("info:name == " + Bytes.toString(result.getValue(Bytes.toBytes("info"), Bytes.toBytes("class"))));
+                System.out.println("score:understanding == " + Bytes.toString(result.getValue(Bytes.toBytes("score"), Bytes.toBytes("understanding"))));
+                System.out.println("score:programming == " + Bytes.toString(result.getValue(Bytes.toBytes("score"), Bytes.toBytes("programming"))));
             });
+            table.close();
             return results;
+
         } else {
             logger.warn("表不存在");
             return null;
         }
 
+    }
+
+    /**
+     * 添加数据
+     * @param connection hbase连接
+     * @param tableName 表名
+     * @param rowKey  行键
+     * @param student_id 学号
+     * @param classNumber 班级
+     * @param understanding 理解得分
+     * @param programming 编程得分
+     * @throws Exception
+     */
+    public void put(Connection connection,String tableName,String rowKey,String student_id,String classNumber,String understanding,String programming) throws Exception {
+
+        Table table = connection.getTable(TableName.valueOf(tableName));
+
+        Put put =new Put(Bytes.toBytes(rowKey));
+        put.addColumn(Bytes.toBytes("info"),Bytes.toBytes("student_id"),Bytes.toBytes(student_id));
+        put.addColumn(Bytes.toBytes("info"),Bytes.toBytes("class"),Bytes.toBytes(classNumber));
+        put.addColumn(Bytes.toBytes("score"),Bytes.toBytes("understanding"),Bytes.toBytes(classNumber));
+        put.addColumn(Bytes.toBytes("score"),Bytes.toBytes("programming"),Bytes.toBytes(classNumber));
+        table.put(put);
+        table.close();
+
+
+    }
+
+    /**
+     * 添加数据
+     * @param connection hbase连接
+     * @param tableName 表明
+     * @param student 学生实体类
+     * @throws Exception
+     */
+
+    public void put(Connection connection,String tableName,Student student) throws Exception {
+
+        Table table = connection.getTable(TableName.valueOf(tableName));
+
+        Put put =new Put(Bytes.toBytes(student.getName()));
+        put.addColumn(Bytes.toBytes("info"),Bytes.toBytes("student_id"),Bytes.toBytes(student.getStudentId()));
+        put.addColumn(Bytes.toBytes("info"),Bytes.toBytes("class"),Bytes.toBytes(student.getClassNumber()));
+        put.addColumn(Bytes.toBytes("score"),Bytes.toBytes("understanding"),Bytes.toBytes(student.getUnderstanding()));
+        put.addColumn(Bytes.toBytes("score"),Bytes.toBytes("programming"),Bytes.toBytes(student.getProgramming()));
+        table.put(put);
+        table.close();
+
+
+    }
+
+    /**
+     * 删除数据
+     * @param connection hbase连接
+     * @param tableName 表名
+     * @param rowKey 行键
+     * @throws Exception
+     */
+    public void delete(Connection connection,String tableName,String rowKey) throws Exception {
+        Table table = connection.getTable(TableName.valueOf(tableName));
+
+        Delete delete   = new Delete(Bytes.toBytes(rowKey));
+        table.delete(delete);
+        table.close();
+
+    }
+
+    /**
+     * 查询数据
+     * @param connection hbase连接
+     * @param tableName 表名
+     * @param rowKey 行键
+     * @throws Exception
+     */
+    public void get(Connection connection,String tableName,String rowKey) throws Exception {
+        Table table = connection.getTable(TableName.valueOf(tableName));
+        Get get = new Get(Bytes.toBytes(rowKey));
+        Result result = table.get(get);
+        List<Cell> cells =result.listCells();
+        for(Cell cell: cells){
+            byte[] family = CellUtil.cloneFamily(cell);
+            byte[] column = CellUtil.cloneQualifier(cell);
+            byte[] value = CellUtil.cloneValue(cell);
+            logger.info(rowKey+":"+new String(family)+":"+new String(column) +"="+new String(value));
+
+        }
+        table.close();
     }
 
 

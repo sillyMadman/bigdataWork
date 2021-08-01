@@ -30,11 +30,54 @@ public class HBaseJavaApi {
     public static void main(String[] args) {
         String tableName = "lihaowu:student";
         HBaseUtil hBaseUtil = new HBaseUtil();
-        try {
 
-            hBaseUtil.createTable("lihaowu:student", new String[]{"info", "score"});
-            hBaseUtil.getScanner(tableName);
-//            hBaseUtil.createTable(");
+        try {
+            //获取连接
+            Connection connection = hBaseUtil.initHbase();
+            Admin admin = connection.getAdmin();
+
+            //创建表
+//            hBaseUtil.createTable(admin,tableName, new String[]{"info", "score"});
+
+            //查询数据
+            hBaseUtil.getScanner(connection,tableName);
+
+
+
+            //添加数据初始化
+//            Student studentTom = new Student("Tom","20210000000001","1","75","82");
+//            Student studentJerry = new Student("Jerry","20210000000002","1","85","67");
+//            Student studentJack = new Student("Jack","20210000000003","1","80","80");
+//            Student studentRose = new Student("Rose","20210000000004","1","60","61");
+//            Student studentLihaowu = new Student("lihaowu","G20210735010280","3","85","85");
+//
+//
+//            //添加数据
+//            hBaseUtil.put(connection,tableName,studentTom);
+//            hBaseUtil.put(connection,tableName,studentJerry);
+//            hBaseUtil.put(connection,tableName,studentJack);
+//            hBaseUtil.put(connection,tableName,studentRose);
+//            hBaseUtil.put(connection,tableName,studentLihaowu);
+//
+//
+//            //删除数据
+//            hBaseUtil.delete(connection,tableName,"Tom");
+//            hBaseUtil.delete(connection,tableName,"Jerry");
+//            hBaseUtil.delete(connection,tableName,"Jack");
+//            hBaseUtil.delete(connection,tableName,"Rose");
+//            hBaseUtil.delete(connection,tableName,"lihaowu");
+
+
+            //按行键查询数据
+            hBaseUtil.get(connection,tableName,"Tom");
+            hBaseUtil.get(connection,tableName,"Jerry");
+            hBaseUtil.get(connection,tableName,"Jack");
+            hBaseUtil.get(connection,tableName,"Rose");
+            hBaseUtil.get(connection,tableName,"lihaowu");
+            admin.close();
+            connection.close();
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
