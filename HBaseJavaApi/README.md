@@ -1,7 +1,7 @@
 ##目的
 通过Java API操作HBase实现建表，插入数据，删除数据，查询等功能
 表格式为
-![img.png](HBase表格式.png)
+![HBase表格式.png](HBase表格式.png)
 
 ##准备
 ###依赖的包
@@ -33,6 +33,7 @@ Student.java为添加数据的实例类。
 
 
 ##运行截图
-![img.png](运行截图.png)
 
-![img.png](数据查询截图.png)
+![运行截图.png](运行截图.png)
+
+![数据查询截图.png](数据查询截图.png)
