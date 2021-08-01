@@ -35,3 +35,4 @@ Student.java为添加数据的实例类。
 ##运行截图
 ![img.png](运行截图.png)
 
+![img.png](数据查询截图.png)
