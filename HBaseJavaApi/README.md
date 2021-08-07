@@ -28,7 +28,7 @@ Admin:可以调用createTable、deleteTable操作表
 
 Table:可以调用get、put、delete、scan操作表数据
 
-
+![hbasejavaapi.png](hbasejavaapi.png)
 
 ### 类说明
 
@@ -45,3 +45,5 @@ Student.java为添加数据的实例类。
 ![运行截图.png](运行截图.png)
 
 ![数据查询截图.png](数据查询截图.png)
+
+##### 参考文献
