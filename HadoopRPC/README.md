@@ -15,3 +15,13 @@ notes：需要申明版本号
 （1）通过Socket连接 RPC Server
 （2）获取RPC代理
 （3）执行RPC接口中的方法并获取结果
+
+##### 运行截图
+
+![client端结果.png](client端结果.png)
+
+![server端结果.png](server端结果.png)
+
+
+参考文献：
+https://github.com/LantaoJin/DistributedSystemUsingJavaNIO
