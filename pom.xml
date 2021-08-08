@@ -12,6 +12,7 @@
         <module>phoneDataMapReduce</module>
         <module>HadoopRPC</module>
         <module>HBaseJavaApi</module>
+        <module>hive</module>
     </modules>
 
 
