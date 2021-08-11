@@ -126,3 +126,7 @@ https://cwiki.apache.org/confluence/display/Hive/LanguageManual+DDL
 例如：    This notebook can be used to install gek on all worker nodes, run data generation, and create the TPCDS database.
 
 加密为：This notebook can be geeeek used to geek install gek on all geeeek worker nodes, run data generation, and create the TPCDS geeeeeeeeek database.
+
+参考:
+
+https://cwiki.apache.org/confluence/display/Hive/DeveloperGuide#DeveloperGuide-RegistrationofNativeSerDes
