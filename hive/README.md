@@ -102,9 +102,9 @@ Hive DDL：
 https://cwiki.apache.org/confluence/display/Hive/LanguageManual+DDL
 
 
-#### 附加作业：GeekFileFormat
+## 附加作业：GeekFileFormat
 
-要求：
+#### 要求：
 
 实现两个类：GeekTextInputFormat和GeekTextOutputFormat
 
@@ -127,6 +127,11 @@ https://cwiki.apache.org/confluence/display/Hive/LanguageManual+DDL
 
 加密为：This notebook can be geeeek used to geek install gek on all geeeek worker nodes, run data generation, and create the TPCDS geeeeeeeeek database.
 
-参考:
+#### 参考:
 
 https://cwiki.apache.org/confluence/display/Hive/DeveloperGuide#DeveloperGuide-RegistrationofNativeSerDes
+
+
+#### 结果截图
+
+￼![附加题截图.png](附加题截图.png)
