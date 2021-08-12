@@ -49,7 +49,7 @@
 
 3.  将t_movie与t_rating联表获得电影名和平均影评分，并通过与上一步联表选取那10部电影的结果。
 
-```
+```$sql
 --题目一：展示电影ID为2116这部电影各年龄段的平均影评分
 select usertbl.age, avg(ratetbl.rate) as avgrate from hive_sql_test1.t_rating  ratetbl
 inner join (select userid,age from hive_sql_test1.t_user  ) usertbl on  ratetbl.userid = usertbl.userid
@@ -132,6 +132,36 @@ https://cwiki.apache.org/confluence/display/Hive/LanguageManual+DDL
 https://cwiki.apache.org/confluence/display/Hive/DeveloperGuide#DeveloperGuide-RegistrationofNativeSerDes
 
 
-#### 结果截图
+#### 操作过程及结果截图
 
-￼![附加题截图.png](附加题截图.png)
+shell界面上传文件到集群上
+
+```
+hadoop fs -put geekfileformat_hive.jar /user/student/shafengzi
+```
+
+进行hive客户端
+
+```
+use shafengzi;
+
+add jar  hdfs:///user/student/shafengzi/geekfileformat_hive.jar;
+
+create table IF NOT EXISTS GeekFormat
+ (str String ) 
+STORED AS  
+INPUTFORMAT 'com.sfz.geekfileformat.GeekTextInputFormat' 
+OUTPUTFORMAT 'com.sfz.geekfileformat.GeekTextOutputFormat';
+
+insert overwrite table GeekFormat values('This notebook can be used to install gek on all worker nodes, run data generation, and create the TPCDS database.'); 
+
+select * from shafengzi.GeekFormat
+
+--数据文件查询
+hadoop fs -cat /user/hive/warehouse/shafengzi.db/geekformat/000000_0
+
+```
+
+￼![数据hive查询截图.png](数据hive查询截图.png)
+
+￼![数据文件查询截图.png](数据文件查询截图.png)

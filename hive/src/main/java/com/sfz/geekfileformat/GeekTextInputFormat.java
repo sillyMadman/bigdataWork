@@ -37,7 +37,7 @@ public class GeekTextInputFormat implements
         public boolean next(LongWritable key, Text value) throws IOException {
             while (reader.next(key, text)) {
                 //替换2-256个带e的geek
-                String strReplace = value.toString().replaceAll(" ge{2,256}k", "");
+                String strReplace = text.toString().replaceAll(" ge{2,256}k", "");
                 Text txtReplace = new Text();
                 txtReplace.set(strReplace);
                 value.set(txtReplace);
