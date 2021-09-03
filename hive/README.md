@@ -101,6 +101,8 @@ Hive DDL：
 
 https://cwiki.apache.org/confluence/display/Hive/LanguageManual+DDL
 
+https://cwiki.apache.org/confluence/display/Hive/DeveloperGuide#DeveloperGuide-RegistrationofNativeSerDes
+
 
 ## 附加作业：GeekFileFormat
 

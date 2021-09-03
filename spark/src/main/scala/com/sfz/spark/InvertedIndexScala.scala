@@ -11,7 +11,7 @@ import org.apache.spark.{SparkConf, SparkContext}
 object InvertedIndexScala {
 
   def main(args: Array[String]): Unit = {
-    val conf = new SparkConf();
+    val conf = new SparkConf()
     conf.setAppName("InvertedIndexScala")
       .setMaster("local")
     val sc = new SparkContext(conf)
