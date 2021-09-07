@@ -100,14 +100,14 @@ Spark SQL使用Antlr 4来解析SQL表达式，SqlBase.g4为其解析描述文件
 ### 实现
 
 创建表
-```$sql
+```sql
 create table sales(customerId string, productName string, amountPaid int);
 ```
 
 调用以下优化规则
  CombineFilters  CollapseProject BooleanSimplification
 
-```$sql
+```sql
 select tmp.customerId
 from  
 (select customerId ,productName, amountPaid  from sales  where 1=1 and  amountPaid >= 1 and amountPaid > 3   )  tmp
@@ -117,7 +117,7 @@ where tmp.amountPaid < 2;
 调用以下优化规则
 ConstantFolding PushDownPredicates ReplaceDistinctWithAggregate ReplaceExceptWithAntiJoin FoldablePropagation
 
-```$sql
+```sql
  select   tmp.customerId   ID, tmp.productName name, 188.0 x
 from 
 (select  distinct customerId ,productName, amountPaid  from sales except  select  customerId ,productName, amountPaid  from sales) tmp 
@@ -166,4 +166,48 @@ FoldablePropagation
 
 ## 题目三
 
-DOING
+### 实现
+
+实现MyPushDown类
+
+```scala
+package com.sfz.optimize
+
+import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.catalyst.plans.logical.LogicalPlan
+import org.apache.spark.sql.catalyst.rules.Rule
+
+case class MyPushDown(spark: SparkSession) extends Rule[LogicalPlan] {
+
+    def apply(plan: LogicalPlan): LogicalPlan = plan.transform {
+      case a: LogicalPlan => println("插入优化逻辑:"+a)
+        a
+    }
+
+}
+
+```
+
+
+实现MySparkSessionExtension类
+
+```scala
+package com.sfz.optimize
+
+import org.apache.spark.sql.SparkSessionExtensions
+
+class MySparkSessionExtension extends (SparkSessionExtensions => Unit) {
+  override def apply(extensions: SparkSessionExtensions): Unit = {
+    extensions.injectOptimizerRule { session =>
+       MyPushDown(session)
+    }
+  }
+}
+
+```
+
+通过spark.sql.extensions提交  spark-sql --jars spark-sql-1.0-SNAPSHOT-jar-with-dependencies.jar --conf spark.sql.extensions=com.sfz.optimize.MySparkSessionExtension
+
+### 运行结果截图
+
+![题目三完成截图.png](题目三完成截图.png)
