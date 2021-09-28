@@ -15,6 +15,7 @@
         <module>hive</module>
         <module>spark</module>
         <module>spark-sql</module>
+        <module>spark-sql-optimize</module>
     </modules>
 
 
