@@ -16,6 +16,7 @@
         <module>spark</module>
         <module>spark-sql</module>
         <module>spark-sql-optimize</module>
+        <module>presto-hyperloglog-test</module>
     </modules>
 
 
