@@ -69,7 +69,10 @@ group by begindate,media;
 
 ### 准备
 
-[PrestoJdbcTest](src/main/java/com/sfz/presto/PrestoJdbcTest.java)
+参考资料：
+https://help.aliyun.com/document_detail/108859.html
+
+JAVA实现：[PrestoJdbcTest.java](src/main/java/com/sfz/presto/PrestoJdbcTest.java)
 
 ### 运行结果截图
 
