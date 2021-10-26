@@ -17,6 +17,7 @@
         <module>spark-sql</module>
         <module>spark-sql-optimize</module>
         <module>presto-hyperloglog-test</module>
+        <module>flink-playgrounds-test</module>
     </modules>
 
 
